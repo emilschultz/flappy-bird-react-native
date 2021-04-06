@@ -9,18 +9,22 @@ export default function App() {
   const birdLeft = screenWidth / 2;
   const [birdBottom, setBirdBottom] = useState(screenHeight / 2);
   const [obstaclesLeft, setObstaclesLeft] = useState(screenWidth);
+  const [obstaclesLeftTwo, setObstaclesLeftTwo] = useState(
+    screenWidth + screenWidth / 2 + 30
+  );
   const obstacleWidth = 60;
   const obstacleHeight = 300;
-  const gap = 50;
+  const gap = 200;
   const gravity = 3;
   let gameTimerId;
   let obstaclesLeftTimerId;
+  let obstaclesLeftTimerIdTwo;
 
   //start bird falling
   useEffect(() => {
     if (birdBottom > 0) {
       gameTimerId = setInterval(() => {
-        setBirdBottom((birdBottom) => birdBottom - 3);
+        setBirdBottom((birdBottom) => birdBottom - gravity);
       }, 30);
       return () => {
         clearInterval(gameTimerId);
@@ -31,22 +35,49 @@ export default function App() {
 
   // start first obstacles
   useEffect(() => {
-    if (obstaclesLeft > 0) {
+    if (obstaclesLeft > -obstacleWidth) {
       obstaclesLeftTimerId = setInterval(() => {
         setObstaclesLeft((obstaclesLeft) => obstaclesLeft - 5);
       }, 30);
+
+      return () => {
+        clearInterval(obstaclesLeftTimerId);
+      };
+    } else {
+      setObstaclesLeft(screenWidth);
     }
-    return () => {
-      clearInterval(obstaclesLeftTimerId);
-    };
   }, [obstaclesLeft]);
+
+  // start second obstacles
+  useEffect(() => {
+    if (obstaclesLeftTwo > -obstacleWidth) {
+      obstaclesLeftTimerIdTwo = setInterval(() => {
+        setObstaclesLeftTwo((obstaclesLeftTwo) => obstaclesLeftTwo - 5);
+      }, 30);
+
+      return () => {
+        clearInterval(obstaclesLeftTimerIdTwo);
+      };
+    } else {
+      setObstaclesLeftTwo(screenWidth);
+    }
+  }, [obstaclesLeftTwo]);
 
   return (
     <View style={styles.container}>
       <Bird birdBottom={birdBottom} birdLeft={birdLeft} />
 
       <Obstacles
+        color={"green"}
         obstaclesLeft={obstaclesLeft}
+        obstacleWidth={obstacleWidth}
+        obstacleHeight={obstacleHeight}
+        gap={gap}
+      />
+
+      <Obstacles
+        color={"yellow"}
+        obstaclesLeft={obstaclesLeftTwo}
         obstacleWidth={obstacleWidth}
         obstacleHeight={obstacleHeight}
         gap={gap}
