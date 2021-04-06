@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import Bird from "./components/Bird";
 import Obstacles from "./components/Obstacles";
 
@@ -39,7 +39,7 @@ export default function App() {
   useEffect(() => {
     if (obstaclesLeft > -obstacleWidth) {
       obstaclesLeftTimerId = setInterval(() => {
-        setObstaclesLeft((obstaclesLeft) => obstaclesLeft - 5);
+        setObstaclesLeft((obstaclesLeft) => obstaclesLeft - 5.9);
       }, 30);
 
       return () => {
@@ -66,6 +66,31 @@ export default function App() {
       setObstaclesNegHeightTwo(-Math.random() * 100);
     }
   }, [obstaclesLeftTwo]);
+
+  // check for collisions
+  useEffect(() => {
+    if (
+      birdBottom < obstaclesNegHeight + obstacleHeight + 30 ||
+      (birdBottom > obstaclesNegHeight + obstacleHeight + gap - 30 &&
+        obstaclesLeft > screenWidth / 2 - 30 &&
+        obstaclesLeft < screenWidth / 2 + 30 &&
+        obstaclesLeft < screenWidth / 2 + 30) ||
+      birdBottom < obstaclesNegHeightTwo + obstacleHeight + 30 ||
+      (birdBottom > obstaclesNegHeightTwo + obstacleHeight + gap - 30 &&
+        obstaclesLeftTwo > screenWidth / 2 - 30 &&
+        obstaclesLeftTwo < screenWidth / 2 - 30 &&
+        obstaclesLeftTwo < screenWidth / 2 + 30)
+    ) {
+      console.log("game over");
+      gameOver();
+    }
+  });
+
+  const gameOver = () => {
+    clearInterval(gameTimerId);
+    clearInterval(obstaclesLeftTimerId);
+    clearInterval(obstaclesLeftTimerIdTwo);
+  };
 
   return (
     <View style={styles.container}>
