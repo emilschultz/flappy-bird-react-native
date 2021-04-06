@@ -12,6 +12,8 @@ export default function App() {
   const [obstaclesLeftTwo, setObstaclesLeftTwo] = useState(
     screenWidth + screenWidth / 2 + 30
   );
+  const [obstaclesNegHeight, setObstaclesNegHeight] = useState(0);
+  const [obstaclesNegHeightTwo, setObstaclesNegHeightTwo] = useState(0);
   const obstacleWidth = 60;
   const obstacleHeight = 300;
   const gap = 200;
@@ -45,6 +47,7 @@ export default function App() {
       };
     } else {
       setObstaclesLeft(screenWidth);
+      setObstaclesNegHeight(-Math.random() * 100);
     }
   }, [obstaclesLeft]);
 
@@ -60,6 +63,7 @@ export default function App() {
       };
     } else {
       setObstaclesLeftTwo(screenWidth);
+      setObstaclesNegHeightTwo(-Math.random() * 100);
     }
   }, [obstaclesLeftTwo]);
 
@@ -72,6 +76,7 @@ export default function App() {
         obstaclesLeft={obstaclesLeft}
         obstacleWidth={obstacleWidth}
         obstacleHeight={obstacleHeight}
+        randomBottom={obstaclesNegHeight}
         gap={gap}
       />
 
@@ -80,6 +85,7 @@ export default function App() {
         obstaclesLeft={obstaclesLeftTwo}
         obstacleWidth={obstacleWidth}
         obstacleHeight={obstacleHeight}
+        randomBottom={obstaclesNegHeightTwo}
         gap={gap}
       />
     </View>

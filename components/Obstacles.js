@@ -7,6 +7,7 @@ const Obstacles = ({
   obstacleWidth,
   obstacleHeight,
   gap,
+  randomBottom,
 }) => {
   return (
     <>
@@ -17,7 +18,7 @@ const Obstacles = ({
           width: obstacleWidth,
           height: obstacleHeight,
           left: obstaclesLeft,
-          bottom: 0 + obstacleHeight + gap,
+          bottom: randomBottom + obstacleHeight + gap,
         }}
       />
 
@@ -28,7 +29,7 @@ const Obstacles = ({
           width: obstacleWidth,
           height: obstacleHeight,
           left: obstaclesLeft,
-          bottom: 0,
+          bottom: randomBottom,
         }}
       />
     </>
