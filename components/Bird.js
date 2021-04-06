@@ -3,7 +3,7 @@ import { View } from "react-native";
 
 const Bird = ({ birdBottom, birdLeft }) => {
   const birdWidth = 50;
-  const birdHeight = 60;
+  const birdHeight = 50;
 
   return (
     <View
